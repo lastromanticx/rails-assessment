@@ -38,6 +38,7 @@ group :development, :test do
   gem 'devise'
   gem 'omniauth'
   gem 'omniauth-github'
+  gem 'devise-bootstrap-views'
 end
 
 group :development do
