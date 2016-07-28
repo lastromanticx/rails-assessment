@@ -1,0 +1,16 @@
+<div class="well container">
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <h4><%= @create_or_update_text %> Tag</h4>
+      <%= form_for list do |f| %>
+        <p><%= f.label :name %><br>
+        <%= f.text_field :name %><br></p>
+        <%= f.submit "#{create_or_update_text} Tag", class: "btn btn-primary"%>
+      <% end %>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+</div>
+
+<!-- TODO: ADD NESTED ATTRIUTES TASKS ? -->
