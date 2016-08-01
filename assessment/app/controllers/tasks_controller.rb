@@ -18,12 +18,15 @@ class TasksController < ApplicationController
       list = List.find_by(id: params[:list_id])
       if list.nil?
         flash[:warning] = "List not found."
-        redirect_to user_path(current_user)
+        redirect_to lists_path
       elsif list.user != current_user
-        redirect_to user_path(current_user)
+        redirect_to lists_path
       else
         @task = list.tasks.find_by(id: params[:id])
-        redirect_to list_path(list), alert: "Task not found." if @task.nil?
+        if @task.nil? 
+          flash[:warning] = "Task not found."
+          redirect_to list_path(list)
+        end
       end
     else
       @task = task.find(params[:id])
