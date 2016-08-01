@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions', omniauth_callbacks: "callbacks" }
 
-  root to: 'lists#index'
+  root to: 'welcome#home'
 
   resources :tags
 

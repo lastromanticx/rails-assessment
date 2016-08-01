@@ -9,10 +9,14 @@
   </head>
 
   <body>
+    <%= (render partial: "layouts/single_center_top") if not current_user %>
+
     <%= render partial: "layouts/nav" %>
   
     <%= render partial: "layouts/flash_messages" %>
 
     <%= yield %>
+
+    <%= (render partial: "layouts/single_center_bottom") if not current_user %>
   </body>
 </html>
