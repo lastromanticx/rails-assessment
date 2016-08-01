@@ -9,9 +9,9 @@
   </head>
 
   <body>
-    <%= (render partial: "layouts/single_center_top") if not current_user %>
-
     <%= render partial: "layouts/nav" %>
+
+    <%= (render partial: "layouts/single_center_top") if not current_user %>
   
     <%= render partial: "layouts/flash_messages" %>
 
