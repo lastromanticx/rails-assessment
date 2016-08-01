@@ -1,0 +1,25 @@
+<%= render partial: "layouts/single_center_top" %>
+
+<h2><%= @list.name %></h2>
+
+<h4>Tasks</h4>
+<hr>
+
+<% if @list.tasks.empty? %>
+  There are no tasks in this list.  
+<% end%>
+
+<% @list.tasks.each do |task| %>
+  <h5><%= link_to task.name, list_task_path(@list,task) %></h5>
+  <p>Due: <%= task.due_date.strftime("%A, %B %e, %Y") %></p>
+  <p>Status: <%= task.status %></p>
+  <hr>
+<% end %>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h6>Add Task</h6>
+<%= render partial: "tasks/form", locals: {task: @task, list: @list} %>
+
+<%= render partial: "layouts/single_center_bottom" %>

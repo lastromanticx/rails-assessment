@@ -1,10 +1,10 @@
 <div class="well container">
   <div class="row">
     <div class="col-lg-12 text-center">
-      <h2>My Lists</h2>
+      <h3>My Lists</h3>
       <% @lists.each do |list| %>
         <h4><%= link_to list.name, list_path(list) %></h4>
-<% # make nested user/list ? %>
+      <% end %>
     </div>
   </div>
 </div>

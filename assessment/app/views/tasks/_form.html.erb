@@ -1,0 +1,16 @@
+<%= form_for task do |f| %>
+  <%= f.hidden_field :list_id, value: (@list.id if @list) %>
+  <p> 
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <%= f.label :description %><br>
+  <%= f.text_area :description %>
+  <p>
+    <%= f.label "Due (yyyy-mm-dd)" %><br>
+    <%= f.text_field :due_date %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

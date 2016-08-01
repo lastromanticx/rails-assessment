@@ -7,7 +7,10 @@ class ListsController < ApplicationController
     @list = List.find_by(id: params[:id])
     if @list.nil?
       not_found
+    elsif @list.user != current_user
+      redirect_to user_path(current_user)
     end
+    @task = Task.new
   end
 
   def new
@@ -18,14 +21,15 @@ class ListsController < ApplicationController
   def create
     list = List.create(list_params) 
 
-    redirect_to user_path(current_user)
-# make nested user/lists/:id ?
+    redirect_to list_path(list)
   end
 
   def edit
     @list = List.find_by(id: params[:id])
     if @list.nil?
       not_found
+    elsif @list.user != current_user
+      redirect_to user_path(current_user)
     end
     @create_or_update_text = "Update"
   end
@@ -35,7 +39,6 @@ class ListsController < ApplicationController
     list.update(list_params)
 
     redirect_to user_path(current_user)
-# make nested user/lists/:id ? 
   end
 
   def destroy
@@ -45,7 +48,7 @@ class ListsController < ApplicationController
     end
     list.destroy
 
-    redirect_to user_path(current_user)
+    redirect_to lists_path
   end
 
   private
