@@ -1,5 +1,5 @@
 <%= form_for task do |f| %>
-  <%= f.hidden_field :list_id, value: (@list.id if @list) %>
+  <%= f.hidden_field :list_id, value: (@list.id if @list) || task.list_id %>
   <p> 
     <%= f.label :name %><br>
     <%= f.text_field :name %>
@@ -8,7 +8,7 @@
   <%= f.text_area :description %>
   <p>
     <%= f.label "Due (yyyy-mm-dd)" %><br>
-    <%= f.text_field :due_date %>
+    <%= f.text_field :due_date ,value: (task.due_date.strftime("%Y-%m-%d") if task.due_date)%>
   </p>
   <p>
     <%= f.submit %>

@@ -13,6 +13,22 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find_by(id: params[:id])
+    if @task.nil?
+      not_found
+    elsif @task.list.user != current_user
+      redirect_to user_path(current_user)
+    end
+  end
+
+  def update
+    task = Task.find(params[:id])
+    task.update(task_params)
+
+    redirect_to task_path(task)
+  end
+
   private
 
   def task_params
