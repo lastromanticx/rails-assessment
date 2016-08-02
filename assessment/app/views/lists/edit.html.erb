@@ -1,2 +1,6 @@
-<%= render partial: "form", locals: {list: @list, create_or_update_text: @create_or_update_text} %>
+<%= render partial: "layouts/single_center_top" %>
+  <h4>Edit List</h4>
+  
+  <%= render partial: "form", locals: {list: @list, create_or_update_text: @create_or_update_text} %>
 
+<%= render partial: "layouts/single_center_bottom" %>

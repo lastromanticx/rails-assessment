@@ -1,8 +1,6 @@
-<div class="well container">
-  <div class="row">
-    <div class="col-lg-12 text-center">
-      <h4><%= @tag.name %></h4>
-      <%= link_to "Edit", edit_tag_path(@tag) %>
-    </div>
-  </div>
-</div>
+<%= render partial: "layouts/single_center_top" %>
+
+  <h4><%= @tag.name %></h4>
+  <%= link_to "Edit", edit_tag_path(@tag) %>
+
+<%= render partial: "layouts/single_center_bottom" %>
