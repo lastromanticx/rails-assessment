@@ -1,6 +1,9 @@
 <%= render partial: "layouts/single_center_top" %>
 
   <h4><%= @tag.name %></h4>
-  <%= link_to "Edit", edit_tag_path(@tag) %>
+  <% if current_user.admin? %>
+    <p><%= link_to "Edit", edit_tag_path(@tag) %></p>
+    <p><%= link_to "Delete", tag_path(@tag), method: "delete" %></p>
+  <% end %>
 
 <%= render partial: "layouts/single_center_bottom" %>
