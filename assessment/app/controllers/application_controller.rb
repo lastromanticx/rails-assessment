@@ -12,21 +12,23 @@ class ApplicationController < ActionController::Base
     case resource.class.to_s
     when "List"
       case action
-      when :edit, :show
+      when :show
         resource.users.include?(current_user) ? true : false
-      when :destroy
-        l.user_lists.where(user_id: u.id)[0].permission == "creator" ? true : false
+      when :edit, :update, :destroy
+        resource.user_lists.where(user_id: current_user.id).first.permission == "creator" ? true : false
       end
 
     when "Task"
       case action
-      when :edit, :show
+      when :show, :edit, :update
         resource.list.users.include?(current_user) ? true : false
+      when :destroy
+        resource.list.user_lists.where(user_id: current_user.id).first.permission == "creator" ? true : false
       end
 
     when "Tag"
       case action
-      when :destroy, :edit
+      when :edit, :update, :destroy
         current_user.admin?
       end
 

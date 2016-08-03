@@ -10,6 +10,10 @@
     <%= f.label "Due (yyyy-mm-dd)" %><br>
     <%= f.text_field :due_date ,value: (task.due_date.strftime("%Y-%m-%d") if task.due_date)%>
   </p>
+  <p> 
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </p>
   <br>
   <h4>Tags</h4>
   <p>

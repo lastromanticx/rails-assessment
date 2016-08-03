@@ -1,8 +1,9 @@
 <%= render partial: "layouts/single_center_top" %>
 
 <h2><%= @list.name %></h2>
-
-<h4>Tasks</h4>
+<%= link_to "Edit", edit_list_path(@list) %>
+<p>&nbsp;</p>
+<h4>Tasks:</h4>
 <hr>
 
 <% if @list.tasks.empty? %>
@@ -11,7 +12,7 @@
 
 <% @list.tasks.each do |task| %>
   <h5><%= link_to task.name, list_task_path(@list,task) %></h5>
-  <p>Due: <%= task.due_date.strftime("%A, %B %e, %Y") %></p>
+  <p>Due: <%= task.due_date.strftime("%A, %B %e, %Y") %><%= " (OVERDUE)" if task.overdue %></p>
   <p>Status: <%= task.status %></p>
   <hr>
 <% end %>

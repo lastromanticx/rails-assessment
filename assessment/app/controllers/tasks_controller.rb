@@ -10,6 +10,8 @@ class TasksController < ApplicationController
     @task = Task.find_by(id: params[:id])
     if @task.nil?
       not_found
+    elsif not authorize_resource(@task,:show)
+      redirect_to lists_path
     end
   end
 
@@ -19,7 +21,7 @@ class TasksController < ApplicationController
       if list.nil?
         flash[:warning] = "List not found."
         redirect_to lists_path
-      elsif list.user != current_user
+      elsif not authorize_resource(list,:show)
         redirect_to lists_path
       else
         @task = list.tasks.find_by(id: params[:id])
@@ -35,6 +37,7 @@ class TasksController < ApplicationController
 
   def update
     task = Task.find(params[:id])
+    return redirect_to lists_path if not authorize_resource(task,:update)
     task.update(task_params)
 
     redirect_to task_path(task)
