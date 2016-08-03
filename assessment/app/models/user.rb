@@ -5,7 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:github]
 
-  has_many :lists
+  enum role: [:user, :admin]
+
+  has_many :user_lists
+  has_many :lists, through: :user_lists
   has_many :tasks, through: :lists
 
   def self.from_omniauth(auth)

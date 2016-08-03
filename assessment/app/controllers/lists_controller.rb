@@ -7,7 +7,7 @@ class ListsController < ApplicationController
     @list = List.find_by(id: params[:id])
     if @list.nil?
       not_found
-    elsif @list.user != current_user
+    elsif !authorize_resource(@list,:show)
       redirect_to user_path(current_user)
     end
     @task = Task.new
@@ -19,7 +19,9 @@ class ListsController < ApplicationController
   end
 
   def create
-    list = List.create(list_params) 
+    list = List.create(list_params)
+    list.users << current_user
+    list.update_permission(current_user,"creator")
 
     redirect_to list_path(list)
   end
@@ -28,7 +30,7 @@ class ListsController < ApplicationController
     @list = List.find_by(id: params[:id])
     if @list.nil?
       not_found
-    elsif @list.user != current_user
+    elsif !authorize_resource(@list,:edit)
       redirect_to user_path(current_user)
     end
     @create_or_update_text = "Update"
@@ -45,7 +47,9 @@ class ListsController < ApplicationController
     list = List.find_by(id: params[:id])
     if list.nil?
       not_found
+    elsif !authorize_resource(@list,:destroy)
     end
+    list.tasks.map(&:destroy)
     list.destroy
 
     redirect_to lists_path
@@ -54,6 +58,6 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:name,:user_id)
+    params.require(:list).permit(:name)
   end
 end
