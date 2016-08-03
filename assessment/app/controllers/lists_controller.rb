@@ -19,11 +19,15 @@ class ListsController < ApplicationController
   end
 
   def create
-    list = List.create(list_params)
-    list.users << current_user
-    list.update_permission(current_user,"creator")
+    @list = List.new(list_params)
+    if not @list.save
+      @create_or_update_text = "Create"
+      return render :new
+    end
+    @list.users << current_user
+    @list.update_permission(current_user,"creator")
 
-    redirect_to list_path(list)
+    redirect_to list_path(@list)
   end
 
   def edit
@@ -37,11 +41,13 @@ class ListsController < ApplicationController
   end
 
   def update
-    list = List.find(params[:id])
-    return redirect_to lists_path if !authorize_resource(list,:update)
-    list.update(list_params)
-
-    redirect_to list_path(list)
+    @list = List.find(params[:id])
+    return redirect_to lists_path if !authorize_resource(@list,:update)
+    if not @list.update(list_params)
+      @create_or_update_text = "Update"
+      return render :edit 
+    end
+    redirect_to list_path(@list)
   end
 
   def destroy

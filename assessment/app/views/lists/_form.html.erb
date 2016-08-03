@@ -1,3 +1,18 @@
+<% if list.errors.any? %>
+  <div class="alert alert-warning" id="error_explanation">
+    <p>
+      <%= pluralize(list.errors.count, "error") %>
+      prohibited this list from being saved:
+    </p>
+ 
+    <ul>
+    <% list.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for list do |f| %>
   <p>
     <%= f.label :name %><br>

@@ -1,7 +1,12 @@
 class TasksController < ApplicationController
   def create
-    task = Task.create(task_params)
-    task.update(status: "Incomplete")
+    @task = Task.new(task_params)
+    if not @task.save
+      @list = List.find(params[:task][:list_id])
+      @create_or_update_text = "Create"
+      return render '/lists/show', id: params[:task][:list_id]
+    end
+    @task.update(status: "Incomplete")
 
     redirect_to list_path(task_params[:list_id]) 
   end
@@ -36,11 +41,14 @@ class TasksController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
-    return redirect_to lists_path if not authorize_resource(task,:update)
-    task.update(task_params)
+    @task = Task.find(params[:id])
+    return redirect_to lists_path if not authorize_resource(@task,:update)
+    if not @task.update(task_params)
+      @create_or_update_text = "Update"
+      return render :edit
+    end
 
-    redirect_to task_path(task)
+    redirect_to task_path(@task)
   end
 
   private
