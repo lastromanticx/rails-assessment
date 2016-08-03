@@ -3,11 +3,16 @@ class Task < ApplicationRecord
   has_many :task_tags
   has_many :tags, through: :task_tags
 
-  validates_presence_of :name, :due_date
+  validates_presence_of :name
+  validate :date_format
 
   scope :overdue, -> {
     all.select(&:overdue)
   }
+
+  def date_format
+    errors.add(:due_date, "Please format the due date as indicated YYYY-MM-DD") if due_date.nil?
+  end
 
   def tags_attributes=(tag_attributes)
     tag = Tag.find_or_create_by(tag_attributes.values[0]) if tag_attributes.values[0]["name"].match(/[a-zA-Z]/)
