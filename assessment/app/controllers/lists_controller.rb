@@ -19,13 +19,14 @@ class ListsController < ApplicationController
   end
 
   def create
-    @list = List.new(list_params)
+    @list = List.new(name: list_params[:name])
     if not @list.save
       @create_or_update_text = "Create"
       return render :new
     end
     @list.users << current_user
     @list.update_permission(current_user,"creator")
+    @list.collaborators = list_params[:collaborators]
 
     redirect_to list_path(@list)
   end
@@ -52,11 +53,7 @@ class ListsController < ApplicationController
 
   def destroy
     list = List.find_by(id: params[:id])
-    if list.nil?
-      not_found
-    elsif !authorize_resource(@list,:destroy)
-      redirect_to lists_path
-    end
+    return redirect_to lists_path if not authorize_resource(list,:destroy)
     list.tasks.map(&:destroy)
     list.destroy
 
@@ -66,6 +63,6 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:name,:users)
+    params.require(:list).permit(:name,:collaborators)
   end
 end

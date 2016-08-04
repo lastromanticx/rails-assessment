@@ -51,6 +51,15 @@ class TasksController < ApplicationController
     redirect_to task_path(@task)
   end
 
+  def destroy
+    task = Task.find(params[:id])
+    return redirect_to lists_path if not authorize_resource(task,:destroy)
+    list = task.list
+    task.destroy
+
+    redirect_to list_path(list)
+  end
+
   private
 
   def task_params

@@ -9,22 +9,20 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_resource(resource, action)
+    #return true if current_user.admin?
+
     case resource.class.to_s
+      
     when "List"
       case action
       when :show
-        resource.users.include?(current_user) ? true : false
+        resource.users.include?(current_user)
       when :edit, :update, :destroy
-        resource.user_lists.where(user_id: current_user.id).first.permission == "creator" ? true : false
+        resource.permission(current_user) == "creator"
       end
 
     when "Task"
-      case action
-      when :show, :edit, :update
-        resource.list.users.include?(current_user) ? true : false
-      when :destroy
-        resource.list.user_lists.where(user_id: current_user.id).first.permission == "creator" ? true : false
-      end
+      resource.list.users.include?(current_user)
 
     when "Tag"
       case action

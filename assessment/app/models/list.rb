@@ -13,7 +13,7 @@ class List < ApplicationRecord
     user_lists.where(user_id: user.id).first.permission
   end
 
-  def users=(emails)
+  def collaborators=(emails)
     collaborator_list = emails.gsub(","," ").split(/\s+/).map{|email| User.find_by(email: email)}.compact
     creator = user_lists.where(permission: "creator").first.user 
     collaborator_list << creator
