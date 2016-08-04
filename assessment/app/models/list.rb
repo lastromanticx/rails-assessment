@@ -18,7 +18,10 @@ class List < ApplicationRecord
     creator = user_lists.where(permission: "creator").first.user 
     collaborator_list << creator
     self.users.clear
-    collaborator_list.uniq.each{|u| self.users << u}
+    collaborator_list.uniq.each do |u| 
+      self.users << u
+      update_permission(u, "collaborator")
+    end
     update_permission(creator, "creator")
     save
   end
