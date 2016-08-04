@@ -5,4 +5,7 @@
 
     <p><%= link_to "Delete", tag_path(@tag), method: "delete", data: {confirm: "Are you sure?"} if authorize_resource(current_user,@tag,:destroy) %></p>
 
+    <p>&nbsp;</p>
+    <%= link_to "Back to tag list", tags_path %>
+
 <%= render partial: "layouts/single_center_bottom" %>
