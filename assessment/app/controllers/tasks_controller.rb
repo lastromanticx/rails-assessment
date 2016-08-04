@@ -3,7 +3,6 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if not @task.save
       @list = List.find(params[:task][:list_id])
-      @create_or_update_text = "Create"
       return render '/lists/show', id: params[:task][:list_id]
     end
     @task.update(status: "Incomplete")
@@ -15,7 +14,7 @@ class TasksController < ApplicationController
     @task = Task.find_by(id: params[:id])
     if @task.nil?
       not_found
-    elsif not authorize_resource(@task,:show)
+    elsif not authorize_resource(current_user,@task,:show)
       redirect_to lists_path
     end
   end
@@ -26,7 +25,7 @@ class TasksController < ApplicationController
       if list.nil?
         flash[:warning] = "List not found."
         redirect_to lists_path
-      elsif not authorize_resource(list,:show)
+      elsif not authorize_resource(current_user,list,:show)
         redirect_to lists_path
       else
         @task = list.tasks.find_by(id: params[:id])
@@ -42,9 +41,8 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    return redirect_to lists_path if not authorize_resource(@task,:update)
+    return redirect_to lists_path if not authorize_resource(current_user,@task,:update)
     if not @task.update(task_params)
-      @create_or_update_text = "Update"
       return render :edit
     end
 
@@ -53,7 +51,7 @@ class TasksController < ApplicationController
 
   def destroy
     task = Task.find(params[:id])
-    return redirect_to lists_path if not authorize_resource(task,:destroy)
+    return redirect_to lists_path if not authorize_resource(current_user,task,:destroy)
     list = task.list
     task.destroy
 

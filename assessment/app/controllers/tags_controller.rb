@@ -12,7 +12,6 @@ class TagsController < ApplicationController
 
   def new
     @tag = Tag.new
-    @create_or_update_text = "Create"
   end
 
   def create
@@ -25,15 +24,14 @@ class TagsController < ApplicationController
     @tag = Tag.find_by(id: params[:id])
     if @tag.nil?
       not_found
-    elsif not authorize_resource(@tag,:edit)
+    elsif not authorize_resource(current_user,@tag,:edit)
       redirect_to lists_path
     end
-    @create_or_update_text = "Update"
   end
 
   def update
     tag = Tag.find(params[:id])
-    return redirect_to lists_path if not authorize_resource(tag,:update)
+    return redirect_to lists_path if not authorize_resource(current_user,tag,:update)
     tag.update(tag_params)
 
     redirect_to tag_path(tag)
@@ -41,7 +39,7 @@ class TagsController < ApplicationController
 
   def destroy
     tag = Tag.find(params[:id])
-    return redirect_to lists_path if not authorize_resource(tag,:destroy)
+    return redirect_to lists_path if not authorize_resource(current_user,tag,:destroy)
     tag.destroy
 
     redirect_to lists_path

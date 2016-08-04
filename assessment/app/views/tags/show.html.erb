@@ -1,9 +1,8 @@
 <%= render partial: "layouts/single_center_top" %>
 
   <h4><%= @tag.name %></h4>
-  <% if current_user.admin? %>
-    <p><%= link_to "Edit", edit_tag_path(@tag) %></p>
-    <p><%= link_to "Delete", tag_path(@tag), method: "delete" %></p>
-  <% end %>
+    <p><%= link_to "Edit", edit_tag_path(@tag) if authorize_resource(current_user,@tag,:edit) %></p>
+
+    <p><%= link_to "Delete", tag_path(@tag), method: "delete", data: {confirm: "Are you sure?"} if authorize_resource(current_user,@tag,:destroy) %></p>
 
 <%= render partial: "layouts/single_center_bottom" %>

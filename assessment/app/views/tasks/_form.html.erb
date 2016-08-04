@@ -30,7 +30,7 @@
     <%= f.text_field :status %>
   </p>
   <br>
-  <h4>Tags</h4>
+  <h5>Task Tags</h5>
   <p>
   <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name, value: true do |elem| %>
     <%= elem.check_box + elem.text %>&nbsp;
