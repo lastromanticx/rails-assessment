@@ -1,0 +1,18 @@
+<%= render partial: "layouts/single_center_top" %>
+
+  <p><%= link_to "Back to list", list_path(@task.list) %></p>
+  <h3><%= @task.name %></h3>
+  <h5><%= @task.description %></h5>
+  <p>&nbsp;</p>
+  <h6>Due: <%= @task.due_date.strftime("%A, %B %e, %Y") %></h6>
+  <h6>Status: <%= @task.status %></h6>
+
+  <p><%= link_to "Edit", edit_list_task_path(@task.list,@task) %></p>
+  <p><%= link_to "Delete", list_task_path(@task.list,@task), method: "delete", data: {confirm: "Are you sure?"} %></p>
+
+  <p>&nbsp;</p>
+  <h5>Tags</h5>
+  <%= @task.tags.map(&:name).join(", ") %>
+
+<%= render partial: "layouts/single_center_bottom" %>
+

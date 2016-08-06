@@ -1,0 +1,19 @@
+<% if results %>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <h4>Results</h4>
+
+  <p><%= format_search_query_text(query) %></p>
+
+  <% if results.class == Hash %>
+    <%= results[:error] %>
+  <% elsif results.empty? %>
+    There were no matches.
+  <% else %>
+    <% results.each do |task| %>
+      <div><%= link_to task.name, task_path(task) %></div>
+    <% end %>
+  <% end %>
+<% end %>
+

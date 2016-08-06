@@ -1,0 +1,12 @@
+<%= render partial: "layouts/single_center_top" %>
+  
+  <h3>Tags</h3>
+
+  <% @tags.each do |tag| %>
+    <h5><%= link_to tag.name, tag_path(tag) %></h5>
+  <% end %>
+
+  <p>&nbsp;</p>
+  <%= link_to "New Tag", new_tag_path %>
+
+<%= render partial: "layouts/single_center_bottom" %>
