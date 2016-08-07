@@ -25,7 +25,7 @@ class TagsController < ApplicationController
     if @tag.nil?
       not_found
     elsif not authorize_resource(current_user,@tag,:edit)
-      redirect_to lists_path
+      return redirect_to lists_path
     end
   end
 
