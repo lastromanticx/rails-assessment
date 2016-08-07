@@ -22,4 +22,8 @@ class Task < ApplicationRecord
   def overdue
     due_date < Time.now
   end
+
+  def format_due_date
+    due_date.strftime("%A, %B %e, %Y") + (overdue ? " (OVERDUE)" : "")
+  end
 end
