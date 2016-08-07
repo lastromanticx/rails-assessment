@@ -1,7 +1,9 @@
 <%= render partial: "layouts/single_center_top" %>
   
   <h3>Tags</h3>
-
+  
+  <p>&nbsp;</p>
+  
   <% @tags.each do |tag| %>
     <h5><%= link_to tag.name, tag_path(tag) %></h5>
   <% end %>
