@@ -8,7 +8,7 @@ class ListsController < ApplicationController
     if @list.nil?
       not_found
     elsif !authorize_resource(current_user,@list,:show)
-      return redirect_to user_path(current_user)
+      return redirect_to lists_path
     end
     @task = Task.new
   end
