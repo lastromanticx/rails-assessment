@@ -42,7 +42,7 @@ class TagsController < ApplicationController
     return redirect_to lists_path if not authorize_resource(current_user,tag,:destroy)
     tag.destroy
 
-    redirect_to lists_path
+    redirect_to tags_path
   end
 
   private
