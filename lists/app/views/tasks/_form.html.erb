@@ -32,8 +32,12 @@
   <br>
   <h5>Task Tags</h5>
   <p>
-  <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name, value: true do |elem| %>
-    <%= elem.check_box + elem.text %>&nbsp;
+  <% if Tag.all.empty? %>
+    There are no tags defined.
+  <% else %>
+    <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name, value: true do |elem| %>
+      <%= elem.check_box + elem.text %>&nbsp;
+    <% end %>
   <% end %>
   </p>
   <p>
